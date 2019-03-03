@@ -27,18 +27,20 @@ import com.dominos.models.Address;
 @Component
 public class AddressDAO implements IAddressDAO {
 
-	private static final String GET_ALL_ADDRESSES_OF_USER = "";
+	private static final String GET_ALL_ADDRESSES_OF_USER = "select * from " + "address a\r\n" + "join user u\r\n"
+			+ "on (a.user_id = u.user_id) where u.user_id = ?";
 
-	private static final String GET_ADDRESS_OF_ORDER = "";
+	private static final String GET_ADDRESS_OF_ORDER = "select a.address from orders o\r\n" + "join address a\r\n"
+			+ "on (a.id = o.id) where o.order_id = ?";
 
-	private static final String INSERT_ADDRESS_FOR_USER = ""
+	private static final String INSERT_ADDRESS_FOR_USER = "INSERT INTO address (address, user_id) \r\n"
 			+ "VALUES (?,?);";
 
-	private static final String GET_ADDRESS_BY_ID = "";
+	private static final String GET_ADDRESS_BY_ID = "SELECT * FROM dominos.address where id = ?;";
 
-	private static final String DELETE_ADDRESS = "";
+	private static final String DELETE_ADDRESS = "DELETE FROM address where user_id=? AND id=?";
 	
-	private static final String IS_ADDRESS_EXCIST = "";
+	private static final String IS_ADDRESS_EXCIST = "SELECT count(*) as count FROM address WHERE address = ? and user_id=?;";
 
 	@Autowired
 	private Connection con;

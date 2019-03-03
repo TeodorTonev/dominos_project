@@ -1,4 +1,4 @@
-package com.dominos.models;
+package com.dominos.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -2,8 +2,8 @@ package com.dominos.dao;
 
 import java.sql.SQLException;
 
+import com.dominos.dto.LoginDTO;
 import com.dominos.models.User;
-import com.dominos.models.LoginDTO;
 
 public interface IUserDAO {
 

@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.dominos.db.DBConnection;
+import com.dominos.dto.LoginDTO;
 import com.dominos.models.Address;
-import com.dominos.models.LoginDTO;
 import com.dominos.dao.IAddressDAO;
 import com.dominos.models.Order;
 import com.dominos.models.User;
