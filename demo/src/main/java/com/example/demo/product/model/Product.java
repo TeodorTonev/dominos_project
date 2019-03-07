@@ -1,24 +1,20 @@
 package com.example.demo.product.model;
 
 import java.math.BigDecimal;
-import java.util.Set;
 
 import com.example.demo.product.ENUM.TypeProduct;
 import com.example.demo.product.Exception.URLException;
-import lombok.*;
 
 public class Product {
 	protected long id;
-	private float price;
+	private double price;
 	private String pictureUrl;
 	private String name;
 	private String description;
-	private TypeProduct tp;
-	
+	private int tp;
+	private String sizeP;
 	
 	public Product() {
-		this.pictureUrl = "img/custmPizza.png";
-		this.price = 6.50f;
 	}
 
 	public Product(float price, String pictureUrl) throws URLException {
@@ -30,14 +26,12 @@ public class Product {
 //		}
 	}
 
-
 	public Product(long id, float price, String pictureUrl, String name) throws URLException {
 		this(price, pictureUrl);
 		if (name!=null && name.trim().length()>0) {
 			this.name=name;
 		}
 		this.id = id;
-
 	}
 
 	public long getId() {
@@ -48,7 +42,7 @@ public class Product {
 		this.id = id;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
@@ -64,11 +58,11 @@ public class Product {
 		this.pictureUrl = pictureUrl;
 	}
 
-	public void setTypeProduct(TypeProduct tp) {
+	public void setTypeProduct(int tp) {
 		this.tp = tp;
 	}
 
-	public float getPrice() {
+	public double getPrice() {
 		BigDecimal bd = new BigDecimal(this.price);
 		bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
 		return bd.floatValue();
@@ -83,16 +77,23 @@ public class Product {
 	}
 
 	public void updatePrice(float price) {
-
 		this.price = price;
 	}
 
-	public TypeProduct getTypeProduct() {
+	public int getTypeProduct() {
 		return this.tp;
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public String getSizeP() {
+		return sizeP;
+	}
+
+	public void setSizeP(String size) {
+		this.sizeP = size;
 	}
 
 	@Override
@@ -116,7 +117,6 @@ public class Product {
 			return false;
 		return true;
 	}
-	
 }
 
 

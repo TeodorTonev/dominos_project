@@ -2,40 +2,19 @@ package com.example.demo.product.model;
 
 import com.example.demo.product.ENUM.Size;
 import com.example.demo.product.Exception.URLException;
+import lombok.ToString;
 
+
+@ToString
 public class Pizza extends Product {
 
-	private int id;
-	//private Dough dough;
+	private long id;
 	private Size size;
-	private String ingradients;;
 
-	public Pizza(long id,float price, String pictureUrl, String name) throws URLException {
-		super(id, price, pictureUrl, name);
-	}
-
-	public Pizza(long id,float price, String pictureUrl, String name, /*Dough dough,*/ Size size, String ingradients)
-			throws URLException {
-		super(id, price, pictureUrl, name);
-		//this.dough = dough;
-		this.size = size;
-		this.ingradients = ingradients;
-	}
-
-	@Override
-	public String toString() {
-		return "Pizza [size=" + size + ", ingradients=" + ingradients + ", getPrice()="
-				+ getPrice() + "]";
-	}
-
-	public String getIngradients() {
-		return ingradients;
+	public Pizza() {
 	}
 
 
-	public void setIngradients(String ingradients) {
-		this.ingradients = ingradients;
-	}
 	
 	public long getId() {
 		return this.id;

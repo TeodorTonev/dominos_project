@@ -23,6 +23,6 @@ public interface IOrderDAO {
 	
 	Order getOrderById(long id) throws SQLException, ClassNotFoundException, AddressException;
 	
-	void deleteOrderOnAddress(long address_id);
+	void deleteOrderOnAddress(long address_id) throws SQLException;
 
 }

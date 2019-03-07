@@ -1,24 +1,28 @@
 package com.example.demo.product.model;
 
+
+import lombok.ToString;
+
+@ToString
 public class Restaurant {
 	
-	private int id;
-	private Location loc;
+	private String id;
+	private String loc;
 	
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	
-	public Location getLoc() {
+	public String getLoc() {
 		return loc;
 	}
 	
-	public void setLoc(Location loc) {
+	public void setLoc(String loc) {
 		this.loc = loc;
 	}
 }

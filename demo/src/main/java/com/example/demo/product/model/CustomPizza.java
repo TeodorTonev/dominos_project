@@ -49,25 +49,29 @@ public class CustomPizza extends Product {
 	public void addSupliment(Addable supliment) {
 		if (this.supplements.size() < MAXIMUM_SUPPLEMENTS) {
 			this.supplements.add(supliment);
-			this.updatePrice(this.getPrice() + supliment.getPrice() * this.size.getCoefficient());
+			this.updatePrice((float) (this.getPrice() + supliment.getPrice() * this.size.getCoefficient()));
 		}
 	}
 
 	public void removeSupliment(Addable supliment) {
 		if (!this.supplements.isEmpty()) {
 			this.supplements.remove(supliment);
-			this.updatePrice(this.getPrice() + (supliment.getPrice() * (-1) * this.size.getCoefficient()));
+			this.updatePrice((float) (this.getPrice() + (supliment.getPrice() * (-1) * this.size.getCoefficient())));
 		}
 	}
 
 	public void setSize(String size1) {
 		for (Size x : Size.values()) {
 			if (x.toString().equalsIgnoreCase(size1)) {
-				this.updatePrice(this.getPrice() / this.size.getCoefficient());
+				this.updatePrice((float) (this.getPrice() / this.size.getCoefficient()));
 				this.size = x;
-				this.updatePrice(this.size.getCoefficient() * this.getPrice());
+				this.updatePrice((float) (this.size.getCoefficient() * this.getPrice()));
 			}
 		}
+	}
+
+	public Size getSize() {
+		return size;
 	}
 
 	/*public void setDough(String dough) {
@@ -140,9 +144,7 @@ public class CustomPizza extends Product {
 		return dough;
 	}*/
 
-	public Size getSize() {
-		return size;
-	}
+
 
 	public PizzaSauce getSauce() {
 		return sauce;

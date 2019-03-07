@@ -1,5 +1,7 @@
 package com.example.demo.product.dao;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Set;
 
 import com.example.demo.product.Exception.ProductException;
@@ -8,14 +10,14 @@ import com.example.demo.product.model.*;
 
 public interface IProductDAO {
 
-	Product getProductById(long id) throws ProductException, URLException;
+	Product getProductById(long id) throws ProductException, URLException, SQLException;
 
-	Set<Drink> getAllDrinks() throws URLException, ProductException;
+	List<Drink> getAllDrinks() throws URLException, ProductException, SQLException;
 
-	Set<Sauce> getAllSauces() throws URLException, ProductException;
+	List<Sauce> getAllSauces() throws URLException, ProductException, SQLException;
 
-	Set<Pizza> getAllPizzas() throws URLException, ProductException;
+	List<Pizza> getAllPizzas() throws URLException, ProductException, SQLException;
 
-	void addNewCustomPizza(CustomPizza customPizza);
+	void addNewCustomPizza(CustomPizza customPizza) throws SQLException;
 
 }

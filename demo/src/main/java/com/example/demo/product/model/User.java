@@ -29,7 +29,7 @@ public class User {
 	private String email;
 	
 	private Set<Order> orders;
-	private Set<Address>addresses;
+	private Set<Address> addresses;
 
 	public User() {
 		this.orders = new HashSet<Order>();
@@ -111,12 +111,12 @@ public class User {
 //		this.addresses = addresses;
 //	}
 //
-//	public void addOrder(Order order) {
-//		this.orders.add(order);
-//	}
-//
-//	public void addAddress(Address address) {
-//		this.addresses.add(address);
-//	}
+	public void addOrder(Order order) {
+		this.orders.add(order);
+	}
+
+	public void addAddress(Address address) {
+		this.addresses.add(address);
+	}
 }
 

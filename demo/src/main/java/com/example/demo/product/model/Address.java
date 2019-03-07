@@ -1,6 +1,5 @@
 package com.example.demo.product.model;
 
-
 public class Address {
 	private long address_id;
 	private String address;
@@ -29,5 +28,4 @@ public class Address {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
 }
