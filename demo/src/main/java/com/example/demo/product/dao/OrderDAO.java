@@ -27,10 +27,10 @@ public class OrderDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-	@Autowired
-	IUserDAO userDao;
+//	@Autowired
+//	IUserDAO userDao;
 
-//
+
 	private static final String GET_ORDER_BY_ID = "";
 	private static final String INSERT_PRODUCT_IN_ORDER = "";
 	private static final String INSERT_ORDER_FOR_USER = "";
@@ -92,7 +92,7 @@ public class OrderDAO {
 		Connection con = jdbcTemplate.getDataSource().getConnection();
 		ResultSet rs = null;
 
-		try (PreparedStatement ps = con.prepareStatement(GET_PRODUCTS_OF_ORDER_BY_ID);) {
+		try (PreparedStatement ps = con.prepareStatement(GET_PRODUCTS_OF_ORDER_BY_ID)) {
 			ps.setLong(1, orderId);
 			rs = ps.executeQuery();
 			HashMap<Product, Integer> productsForOrder = new HashMap<Product, Integer>();
@@ -123,7 +123,7 @@ public class OrderDAO {
 			ps.setLong(1, order.getUser().getId());
 			ps.setString(2, (order.getDatetime()).toString());
 			ps.setFloat(3, order.getPrice());
-			ps.setLong(4, order.getAddres().getAddress_id());
+			ps.setLong(4, order.getAddres().getId());
 			ps.setBoolean(5, order.isDelivered());
 			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
@@ -136,7 +136,6 @@ public class OrderDAO {
 			}
 		}
 	}
-//
 
 	public void insertProductsFromOrder(long orderId, HashMap<Product, Integer> cart) throws SQLException {
 		Connection con = jdbcTemplate.getDataSource().getConnection();
@@ -155,7 +154,6 @@ public class OrderDAO {
 			}
 		}
 	}
-//
 
 	public Order getActiveOrderForUser(User user) {
 
@@ -169,7 +167,7 @@ public class OrderDAO {
 		return order;
 
 	}
-//
+
 	public void deleteOrderOnAddress(long address_id) throws SQLException {
 		Connection con = jdbcTemplate.getDataSource().getConnection();
 		ResultSet rs = null;

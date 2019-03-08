@@ -1,12 +1,14 @@
 package com.example.demo.product.model;
 
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-
+@Component
 public class Order {
 	private long id;
 	private LocalDateTime datetime;
@@ -15,8 +17,6 @@ public class Order {
 	private float price;
 	private Address address;
 	private boolean isDelivered;
-	
-	
 	
 	public Order() {
 		this.products = new HashMap<Product, Integer>();

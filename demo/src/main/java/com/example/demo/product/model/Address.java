@@ -3,9 +3,9 @@ package com.example.demo.product.model;
 public class Address {
 	private long address_id;
 	private String address;
-	private User user;
+	private long userId;
 
-	public long getAddress_id() {
+	public long getId() {
 		return address_id;
 	}
 
@@ -21,11 +21,11 @@ public class Address {
 		this.address = address;
 	}
 
-	public User getUser() {
-		return user;
+	public long getUserId() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 }

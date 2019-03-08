@@ -17,7 +17,4 @@ public interface IProductDAO {
 	List<Sauce> getAllSauces() throws URLException, ProductException, SQLException;
 
 	List<Pizza> getAllPizzas() throws URLException, ProductException, SQLException;
-
-	void addNewCustomPizza(CustomPizza customPizza) throws SQLException;
-
 }

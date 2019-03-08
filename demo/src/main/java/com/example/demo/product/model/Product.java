@@ -6,6 +6,7 @@ import com.example.demo.product.ENUM.TypeProduct;
 import com.example.demo.product.Exception.URLException;
 
 public class Product {
+	public static final int MAX_INDEX_OF_NUMBER_TYPE_PRODUCT = 10;
 	protected long id;
 	private double price;
 	private String pictureUrl;
@@ -59,7 +60,12 @@ public class Product {
 	}
 
 	public void setTypeProduct(int tp) {
-		this.tp = tp;
+		if (tp < 1 && tp > MAX_INDEX_OF_NUMBER_TYPE_PRODUCT) {
+			System.out.println("Invalid product type!");
+		}
+		else {
+			this.tp = tp;
+		}
 	}
 
 	public double getPrice() {

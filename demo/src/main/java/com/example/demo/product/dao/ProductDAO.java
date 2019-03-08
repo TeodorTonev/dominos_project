@@ -104,21 +104,6 @@ public class ProductDAO implements IProductDAO{
 		product.setPictureUrl((String)map.get("picture"));
 
 		return product;
-
-//		try {
-//			PreparedStatement st = connection.prepareStatement(GET_PRODUCT_BY_ID_SQL);
-//			st.setLong(1, id);
-//			ResultSet rs = st.executeQuery();
-//
-//			if (rs.next()) {
-//				Product product = new Product(rs.getLong(1), rs.getInt(2), rs.getString(3), rs.getString(4));
-//				return product;
-//			}
-//
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		throw new ProductException("Product with this id not found!");
 	}
 
 
@@ -139,22 +124,6 @@ public class ProductDAO implements IProductDAO{
 			}
 		});
 		return drinks;
-
-//		Statement st;
-//		try {
-//			st = connection.createStatement();
-//			ResultSet rs = st.executeQuery(GET_ALL_DRINKS_SQL);
-//			Set<Drink> products = new HashSet<Drink>();
-//			if (rs.isBeforeFirst()) {
-//				while (rs.next()) {
-//					products.add(new Drink(rs.getLong(1),rs.getFloat(2), rs.getString(3), rs.getString(4)));
-//				}
-//				return products;
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		throw new ProductException("No drinks");
 	}
 
 	@Override
@@ -176,24 +145,6 @@ public class ProductDAO implements IProductDAO{
 			}
 		});
 		return sauses;
-
-
-//		Statement st;
-//		try {
-//			st = connection.createStatement();
-//			ResultSet rs = st.executeQuery(GET_ALL_SAUCES_SQL);
-//
-//			Set<Sauce> products = new HashSet<Sauce>();
-//			if (rs.isBeforeFirst()) {
-//				while (rs.next()) {
-//					products.add(new Sauce(rs.getLong(1),rs.getFloat(2), rs.getString(3), rs.getString(4)));
-//				}
-//				return products;
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		throw new ProductException("No Sauces");
 	}
 
 	@Override
@@ -215,96 +166,9 @@ public class ProductDAO implements IProductDAO{
 			}
 		});
 		return pizzas;
-
-
-//		Statement st;
-//		try {
-//			st = connection.createStatement();
-//			ResultSet rs = st.executeQuery(GET_ALL_PIZZAS_SQL);
-//
-//			Set<Pizza> products = new HashSet<Pizza>();
-//			if (rs.isBeforeFirst()) {
-//				while (rs.next()) {
-//					 Size size =  Size.valueOf(rs.getString(6));
-//					 //Dough dough = Dough.valueOf(rs.getString(7));
-//					products.add(new Pizza(rs.getLong(1), rs.getFloat(2), rs.getString(3), rs.getString(4), /*dough,*/ size, rs.getString(8)));
-//				}
-//				return products;
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		throw new ProductException("No pizzas");
 	}
 
 
-	@Override
-	public void addNewCustomPizza(CustomPizza customPizza) throws SQLException {
-		Connection connection = jdbcTemplate.getDataSource().getConnection();
-		PreparedStatement ps;
-		 try {
-			connection.setAutoCommit(false);
-			ps = connection.prepareStatement( INSERT_NEW_PRODUCT_SQL, Statement.RETURN_GENERATED_KEYS);
-			ps.setDouble(1, customPizza.getPrice());
-			ps.setString(2, customPizza.getPictureUrl());
-			ps.setString(3, customPizza.getName());
-			ps.executeUpdate();
-			ResultSet rs = ps.getGeneratedKeys();
-			rs.next();
-			long id = rs.getLong(1);
-			customPizza.setId(id);
-
-			PreparedStatement psts = connection.prepareStatement(INSERT_NEW_CUSTOM_PIZZA_SQL, Statement.RETURN_GENERATED_KEYS);
-			psts.setString(1, customPizza.getSize().name());
-			psts.setString(2, customPizza.getSauce().name());
-			psts.setLong(3, customPizza.getId());
-			psts.executeUpdate();
-			ResultSet resultSet = psts.getGeneratedKeys();
-			resultSet.next();
-			long customPizzaId = resultSet.getLong(1);
-			customPizza.setCustomPizza_id(customPizzaId);
-
-			for (Addable addable : customPizza.getSupplements()) {
-				if (addable instanceof Cheese) {
-					PreparedStatement prepared = connection.prepareStatement(INSERT_CHEESE_NEW_CUSTOM_PIZZA_SQL);
-					prepared.setLong(1,  customPizza.getCustomPizza_id());
-					prepared.setInt(2, addable.getId());
-					prepared.executeUpdate();
-				}
-				if (addable instanceof Meat) {
-					PreparedStatement prepared = connection.prepareStatement(INSERT_MEAT_NEW_CUSTOM_PIZZA_SQL);
-					prepared.setLong(1,  customPizza.getCustomPizza_id());
-					prepared.setInt(2, addable.getId());
-					prepared.executeUpdate();
-				}
-				if (addable instanceof Spice) {
-					PreparedStatement prepared = connection.prepareStatement(INSERT_SPICE_NEW_CUSTOM_PIZZA_SQL);
-					prepared.setLong(1,  customPizza.getCustomPizza_id());
-					prepared.setInt(2, addable.getId());
-					prepared.executeUpdate();
-				}
-				if (addable instanceof Vegetable) {
-					PreparedStatement	prepared = connection.prepareStatement(INSERT_VEGETABLE_NEW_CUSTOM_PIZZA_SQL);
-					prepared.setLong(1, customPizza.getCustomPizza_id());
-					prepared.setInt(2, addable.getId());
-					prepared.executeUpdate();
-				}
-				connection.commit();
-			}
-		} catch (SQLException e) {
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-		} finally {
-			try {
-				connection.setAutoCommit(true);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
 
 	public List<String> getAllCustomize() {
 		String sql = "SELECT id, name FROM dominos.customize;";
