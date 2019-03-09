@@ -41,8 +41,20 @@ public class ProductsTest {
 	}
 	
 	@Test
-	void testDeleteProduct() {
+	void testDeleteProduct() throws URLException {
 		
+		ProductDAO dao = new ProductDAO();
+		int oldCountOfUsers = dao.getAllProducts().size();
+		
+		dao.removeProduct(2);
+		int newCountOfUsers = dao.getAllProducts().size();
+	
+		assertNotSame(oldCountOfUsers, newCountOfUsers);
+	}
+	
+	void testDeleteProductAgain() {
+		
+		/*......*/
 	}
 
 }

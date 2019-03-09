@@ -5,6 +5,14 @@ public class Address {
 	private String address;
 	private long userId;
 
+	
+	public Address(long address_id, String address, long userId) {
+		super();
+		this.address_id = address_id;
+		this.address = address;
+		this.userId = userId;
+	}
+	
 	public long getId() {
 		return addressId;
 	}

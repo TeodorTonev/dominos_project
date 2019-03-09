@@ -39,8 +39,36 @@ public class UsersTest {
 	}
 	
 	@Test
-	void testDeleteUser() {
+	void testAddAddress() throws ClassNotFoundException, SQLException {
+		UserDAO dao = new UserDAO();
+		Address address = new Address(0, "гр.София, ул.Милин Камък N8", 6);
+		dao.insertAddressForUser(address);
 		
+		List<Address> addresses = dao.getAllAdressesForUser();
+		
+		assertTrue(addresses.stream().filter(address1 -> 
+		address1.getAddress().equals(address.getAddress()))
+				.findAny().isPresent());
+		
+		//dao.removeAddressForUser();
+	}
+	
+	@Test
+	void testDeleteUser() throws SQLException {
+		UserDAO dao = new UserDAO();
+		int oldCountOfUsers = dao.getAllUsers().size();
+		
+		dao.removeUser(2);
+		int newCountOfUsers = dao.getAllUsers().size();
+	
+		assertNotSame(oldCountOfUsers, newCountOfUsers);
+	}
+	
+	void testDeleteUserAgain() {
+		
+		UserDAO dao = new UserDAO();
+		dao.removeUser(3);
+		assertNull(3); //????? Ne znam dali e tochno taka..
 	}
 	
 	
