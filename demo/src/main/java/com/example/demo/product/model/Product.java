@@ -14,6 +14,7 @@ public class Product {
 	private String description;
 	private int tp;
 	private String sizeP;
+	private int quantity;
 	
 	public Product() {
 	}
@@ -57,6 +58,14 @@ public class Product {
 
 	public void setPictureUrl(String pictureUrl) {
 		this.pictureUrl = pictureUrl;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	public void setTypeProduct(int tp) {

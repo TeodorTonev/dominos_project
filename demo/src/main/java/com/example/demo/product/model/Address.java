@@ -1,16 +1,16 @@
 package com.example.demo.product.model;
 
 public class Address {
-	private long address_id;
+	private long addressId;
 	private String address;
 	private long userId;
 
 	public long getId() {
-		return address_id;
+		return addressId;
 	}
 
-	public void setAddress_id(long address_id) {
-		this.address_id = address_id;
+	public void setAddressId(long addressId) {
+		this.addressId = addressId;
 	}
 
 	public String getAddress() {

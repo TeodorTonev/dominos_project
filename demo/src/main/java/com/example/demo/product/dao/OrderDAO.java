@@ -6,10 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.TreeSet;
 
 import com.example.demo.product.Exception.AddressException;
 import com.example.demo.product.model.Address;
@@ -220,6 +218,62 @@ public class OrderDAO {
 //			}
 //		}
 //		throw new AddressException();
+//	}
+
+//	public String createOrder(Order order) throws SQLException {
+//
+//
+//	}
+
+	public Address deliveryOrder(long addressId) {
+		String sql = "SELECT * FROM dominos.addresses_for_order where id = ?;";
+		Map map = jdbcTemplate.queryForMap(sql, addressId);
+		Address address = new Address();
+
+		address.setAddressId(Long.valueOf((Integer)map.get("id")));
+		address.setAddress((String)map.get("address"));
+		address.setUserId((Long.valueOf((Integer)map.get("user_id"))));
+
+		return address;
+	}
+
+	public void deliveryFromAPlace() {
+
+	}
+
+	public List<String> listAllHoursForDelivery() {
+		List<String> result = new ArrayList<>();
+		result.add("сега");
+		for (int hour = 10; hour < 24; hour++) {
+			for (int min = 0; min < 60; min += 10) {
+				if (min == 0) {
+					result.add(hour + ":" + min + "0");
+				} else {
+					result.add(hour + ":" + min);
+				}
+			}
+		}
+
+		return result;
+	}
+
+	public String deliveryTime() {
+		List<String> result = new ArrayList<>();
+		result.add("сега");
+		for (int hour = 10; hour < 24; hour++) {
+			for (int min = 0; min < 60; min += 10) {
+				if (min == 0) {
+					result.add(hour + ":" + min + "0");
+				} else {
+					result.add(hour + ":" + min);
+				}
+			}
+		}
+		return result.get(new Random().nextInt(result.size()));
+	}
+
+//	public String removeProductByOrder(Long productId) {
+//
 //	}
 
 }
