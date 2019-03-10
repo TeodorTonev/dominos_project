@@ -24,10 +24,56 @@ public class ProductsController {
         return productDao.getAllProducts();
     }
 
-    @PostMapping("/product/add")
-    public long addProduct(@RequestBody Product product) {
-        return productDao.addProduct(product);
+    @PostMapping("/product/addPizza")
+    public long addProductPizza(@RequestBody Product product) {
+        return productDao.addProductPizza(product);
     }
+
+    @PostMapping("/product/addDeals")
+    public long addProductDeals(@RequestBody Product product) {
+        return productDao.addProductDeals(product);
+    }
+
+    @PostMapping("/product/addStarter")
+    public long addProductStarter(@RequestBody Product product) {
+        return productDao.addProductStarter(product);
+    }
+
+    @PostMapping("/product/addChiken")
+    public long addProductChicken(@RequestBody Product product) {
+        return productDao.addProductChicken(product);
+    }
+
+    @PostMapping("/product/addPasta")
+    public long addProductPasta(@RequestBody Product product) {
+        return productDao.addProductPasta(product);
+    }
+
+    @PostMapping("/product/addSandwich")
+    public long addProductSSandwich(@RequestBody Product product) {
+        return productDao.addProductSandwich(product);
+    }
+
+    @PostMapping("/product/addDips")
+    public long addProductDips(@RequestBody Product product) {
+        return productDao.addProductDips(product);
+    }
+
+    @PostMapping("/product/addDesserts")
+    public long addProductDesserts(@RequestBody Product product) {
+        return productDao.addProductDesserts(product);
+    }
+
+    @PostMapping("/product/addSalad")
+    public long addProductSalad(@RequestBody Product product) {
+        return productDao.addProductSalad(product);
+    }
+
+    @PostMapping("/product/addDrink")
+    public long addProductDrink(@RequestBody Product product) {
+        return productDao.addProductDrinks(product);
+    }
+
 
     @GetMapping("/products/{productId}")
     public Product getProductDetails(@PathVariable long productId) throws ProductException, URLException, SQLException {

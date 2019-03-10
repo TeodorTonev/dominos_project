@@ -15,6 +15,7 @@ public class Product {
 	private int tp;
 	private String sizeP;
 	private int quantity;
+	private long userId;
 	
 	public Product() {
 	}
@@ -58,6 +59,14 @@ public class Product {
 
 	public void setPictureUrl(String pictureUrl) {
 		this.pictureUrl = pictureUrl;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	public int getQuantity() {

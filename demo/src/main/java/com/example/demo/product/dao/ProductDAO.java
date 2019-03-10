@@ -70,19 +70,136 @@ public class ProductDAO implements IProductDAO{
 		return names;
 	}
 
-	public int addProduct(Product product) {
+	public int addProductPizza(Product product) {
 		long id = product.getId();
 		String name = product.getName();
 		String description = product.getDescription();
 		double price = product.getPrice();
 		String size = product.getSizeP();
 		String pictureURL = product.getPictureUrl();
-		long type_id = 2;//product.getTypeProduct();
+		long type_id = 2;//product type
 
 		return jdbcTemplate.update("insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);",
 				id, name, description, price, size, pictureURL, type_id);
-
 	}
+
+	public int addProductDeals(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 1;//product type
+
+		return jdbcTemplate.update("insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);",
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
+	public int addProductStarter(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 3;//product type
+
+		return jdbcTemplate.update("insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);",
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
+	public int addProductChicken(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 4;//product type
+
+		return jdbcTemplate.update("insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);",
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
+	public int addProductPasta(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 5;//product type
+
+		return jdbcTemplate.update("insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);",
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
+	public int addProductSalad(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 6;//product type
+
+		return jdbcTemplate.update("insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);",
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
+	public int addProductSandwich(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 7;//product type
+
+		return jdbcTemplate.update("insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);",
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
+	public int addProductDips(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 8;//product type
+
+		return jdbcTemplate.update("insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);",
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
+	public int addProductDesserts(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 9;//product type
+
+		return jdbcTemplate.update("insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);",
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
+	public int addProductDrinks(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 10;//product type
+
+		return jdbcTemplate.update("insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);",
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
 
 	public boolean removeProduct(int id) {
 		String sql = "DELETE FROM dominos.products WHERE id = ?";

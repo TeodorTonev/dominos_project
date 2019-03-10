@@ -15,40 +15,45 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(InvalidFormatException.class)
-    public ResponseEntity<Object> handleDateTimeParseError(InvalidFormatException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
-    }
-
-    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public ResponseEntity<Object> handleSQLIntegrityConstantViolatingError(SQLIntegrityConstraintViolationException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @ExceptionHandler({NoSuchAlgorithmException.class})
-    public ResponseEntity<Object> handNoSuchAlgorithmError(NoSuchAlgorithmException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(HttpClientErrorException.Unauthorized.class)
-    public ResponseEntity<Object> handleUserNotFoundError(HttpClientErrorException.Unauthorized e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(HttpClientErrorException.NotFound.class)
-    public ResponseEntity<Object> handleUserNotFoundError(HttpClientErrorException.NotFound e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(RelationException.class)
-    public ResponseEntity<Object> handleRelationError(RelationException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(HttpClientErrorException.UnprocessableEntity.class)
-    public ResponseEntity<Object> handleUnprocessableError(HttpClientErrorException.UnprocessableEntity e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<Object> globalHendlerError(Exception e) {
+//        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//    }
+//
+//    @ExceptionHandler(InvalidFormatException.class)
+//    public ResponseEntity<Object> handleDateTimeParseError(InvalidFormatException e) {
+//        return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+//    }
+//
+//    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+//    public ResponseEntity<Object> handleSQLIntegrityConstantViolatingError(SQLIntegrityConstraintViolationException e) {
+//        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+//
+//    @ExceptionHandler({NoSuchAlgorithmException.class})
+//    public ResponseEntity<Object> handNoSuchAlgorithmError(NoSuchAlgorithmException e) {
+//        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+//    }
+//
+//    @ExceptionHandler(HttpClientErrorException.Unauthorized.class)
+//    public ResponseEntity<Object> handleUserNotFoundError(HttpClientErrorException.Unauthorized e) {
+//        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+//    }
+//
+//    @ExceptionHandler(HttpClientErrorException.NotFound.class)
+//    public ResponseEntity<Object> handleUserNotFoundError(HttpClientErrorException.NotFound e) {
+//        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+//    }
+//
+//    @ExceptionHandler(RelationException.class)
+//    public ResponseEntity<Object> handleRelationError(RelationException e) {
+//        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//    }
+//
+//    @ExceptionHandler(HttpClientErrorException.UnprocessableEntity.class)
+//    public ResponseEntity<Object> handleUnprocessableError(HttpClientErrorException.UnprocessableEntity e) {
+//        return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+//    }
 
 //    @ExceptionHandler(NullPointerException.class)
 //    public ResponseEntity<Object> hendleNullPointerError(NullPointerException e) {

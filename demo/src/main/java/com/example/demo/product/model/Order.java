@@ -17,6 +17,7 @@ public class Order {
 	private float price;
 	private Address address;
 	private boolean isDelivered;
+	private String deliveryTime;
 	
 	public Order() {
 		this.products = new HashMap<Product, Integer>();

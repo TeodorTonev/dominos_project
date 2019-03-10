@@ -93,20 +93,7 @@ public class UserController {
         }
     }
 
-//
-////    @PostMapping("/user/getUserId")
-////    public User getUserEmail(@RequestBody String email) {
-////        try {
-////            this.userDAO.getUserId(email);
-////        } catch (SQLException | ClassNotFoundException e) {
-////            e.printStackTrace();
-////            System.out.println("Invalid email address");
-////        }
-////        return null;
-////    }
-//
-////
-     @GetMapping("/users/{userId}")
+     @GetMapping("/getUser/{id}")
      public User getUserById(@PathVariable long id) throws SQLException, ClassNotFoundException {
             return this.userDAO.getUserByID(id);
      }

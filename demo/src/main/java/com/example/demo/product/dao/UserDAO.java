@@ -47,52 +47,7 @@ public class UserDAO implements IUserDAO{
 	}
 
 
-//
-//	public boolean hasSuchEmail(String email) throws SQLException, ClassNotFoundException {
-//		// Connection con = db.getConnection();
-//        Connection con = jdbcTemplate.getDataSource().getConnection();
-//		ResultSet rs = null;
-//		try (PreparedStatement ps = con.prepareStatement(HAS_SUCH_EMAIL)) {
-//
-//			ps.setString(1, email);
-//
-//			rs = ps.executeQuery();
-//			rs.next();
-//			return rs.getInt("count") > 0;
-//		} finally {
-//			if (rs != null) {
-//				rs.close();
-//			}
-//		}
-//	}
-//
-//	public User getUser(String email) throws SQLException, ClassNotFoundException {
-//        Connection con = jdbcTemplate.getDataSource().getConnection();
-//
-//		ResultSet rs = null;
-//		try (PreparedStatement ps = con.prepareStatement(GET_USER_BY_MAIL)) {
-//			ps.setString(1, email);
-//			rs = ps.executeQuery();
-//			User u = null;
-//			if (!rs.next()) {
-//				return new User();
-//			}
-//			u = new User();
-//			u.setId(rs.getLong("id"));
-//			u.setFirstName(rs.getString("firstName"));
-//			u.setLastName(rs.getString("lastName"));
-//			u.setPassword(rs.getString("password"));
-//			u.setEmail(rs.getString(5));
-//
-//			return u;
-//		} finally {
-//			if (rs != null) {
-//				rs.close();
-//			}
-//		}
-//	}
-//
-//
+
 	@Override
 	public User getUserByID(long id) throws SQLException, ClassNotFoundException {
 		String sql = "SELECT * FROM dominos.users WHERE id=?;";
@@ -116,22 +71,6 @@ public class UserDAO implements IUserDAO{
 		return jdbcTemplate.update(sql, args) == 1;
 	}
 
-//	public boolean existsUser(String email, String password) throws SQLException {
-//        Connection con = jdbcTemplate.getDataSource().getConnection();
-//		ResultSet rs = null;
-//		try (PreparedStatement ps = con.prepareStatement(IS_USER_EXCIST)) {
-//
-//			ps.setString(1, email);
-//			ps.setString(2, password);
-//			rs = ps.executeQuery();
-//			rs.next();
-//			return (rs.getInt("count")) > 0;
-//		} finally {
-//			if (rs != null) {
-//				rs.close();
-//			}
-//		}
-//	}
 
 	public User login(LoginDTO user) throws SQLException {
 			Connection connection = this.jdbcTemplate.getDataSource().getConnection();
