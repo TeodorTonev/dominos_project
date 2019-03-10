@@ -13,6 +13,10 @@ import org.springframework.stereotype.Component;
 public class UserDAO implements IUserDAO{
 
 	private static final String QUERY = "SELECT * FROM dominos.users WHERE email = ? AND password = SHA1(?);";
+	private static final String INSERT_ADDRESS_FOR_USER = "insert into dominos.addresses_for_order value (?, ?, ?);";
+	private static final String REGISTER = "insert into dominos.users value (?, ?, ?, ?, ?, SHA1(?));";
+	private static final String GET_USER_BY_ID = "SELECT * FROM dominos.users WHERE id=?;";
+	private static final String REMOVE_USER = "DELETE FROM dominos.users WHERE id = ?";
 
 //	@Autowired
 //	private OrderDAO od;
@@ -29,7 +33,7 @@ public class UserDAO implements IUserDAO{
 	}
 
 	public int insertAddressForUser(Address address) throws SQLException {
-		return jdbcTemplate.update("insert into dominos.addresses_for_order value (?, ?, ?);",
+		return jdbcTemplate.update(INSERT_ADDRESS_FOR_USER,
 				address.getId(), address.getAddress(), address.getUserId());
 	}
 
@@ -42,7 +46,7 @@ public class UserDAO implements IUserDAO{
 		String email = user.getEmail();
 		String password = user.getPassword();
 
-		return jdbcTemplate.update("insert into dominos.users value (?, ?, ?, ?, ?, SHA1(?));",
+		return jdbcTemplate.update(REGISTER,
 				id, firstName, lastName, address, email, password);
 	}
 
@@ -50,7 +54,7 @@ public class UserDAO implements IUserDAO{
 
 	@Override
 	public User getUserByID(long id) throws SQLException, ClassNotFoundException {
-		String sql = "SELECT * FROM dominos.users WHERE id=?;";
+		String sql = GET_USER_BY_ID;
 		Map map = jdbcTemplate.queryForMap(sql, id);
 		User user = new User();
 
@@ -65,7 +69,7 @@ public class UserDAO implements IUserDAO{
 	}
 
 	public boolean removeUser(int id) {
-		String sql = "DELETE FROM dominos.users WHERE id = ?";
+		String sql = REMOVE_USER;
 		Object[] args = new Object[] {id};
 
 		return jdbcTemplate.update(sql, args) == 1;

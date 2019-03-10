@@ -43,27 +43,30 @@ public class OrderDAO {
     private RestaurantDAO restaurantDAO;
 
 
-	private static final String INSERT_PRODUCT_IN_ORDER = "";
+	private static final String PRODUCT_ID_AND_QUANTITY = "select @MAX_ID:= max(id) from orders_products;\n" +
+															"UPDATE dominos.orders_products\n" +
+															"SET quantity = ?, products_id = ?\n" +
+															"WHERE id = @MAX_ID;";
 
-	private static final String GET_ALL_USER_ORDERS = "";
+	private static final String INSERT_INTO_ORDER_PRODUCTS_FROM_ORDER_DETAILS = "INSERT INTO orders_products (detail_id) select max(id) from order_details;";
 
-	private static final String GET_PRODUCTS_OF_ORDER_BY_ID = "";
+	private static final String INSERT_INTO_ORDER_DETAILS = "insert into dominos.order_details values (null, ?, ?, ?, ?);";
 
-	private static final String GET_ALL_ORDERS_ON_ADDRESS = "";
+	private static final String GET_ALL_ORDERS_FOR_USER = "select  u.first_name, u.last_name, c.name, l.neighborhood_name, p.name, e.quantity, o.date\n" +
+															"from orders_products e \n" +
+															"join products p on (e.products_id = p.id)\n" +
+															"join order_details o on (e.detail_id = o.id)\n" +
+															"join users u on (o.id_user = u.id)\n" +
+															"join restaurants r on (o.id_restaurant = r.id)\n" +
+															"join locations l on (r.id_locations = l.id)\n" +
+															"join cities c on (l.id_city = c.id)\n" +
+															"where o.id_user = ?;";
 
-	private static final String SET_ADDRESS_OF_ORDERS_NULL = "";
+	private static final String DELIVERY_ORDER = "SELECT * FROM dominos.addresses_for_order where id = ?;";
 
 
 	public List<ResultOfRequest> listAllOrdersForUser(long id) throws ClassNotFoundException, SQLException, UserException {
-		String sql = "select  u.first_name, u.last_name, c.name, l.neighborhood_name, p.name, e.quantity, o.date\n" +
-				"from orders_products e \n" +
-				"join products p on (e.products_id = p.id)\n" +
-				"join order_details o on (e.detail_id = o.id)\n" +
-				"join users u on (o.id_user = u.id)\n" +
-				"join restaurants r on (o.id_restaurant = r.id)\n" +
-				"join locations l on (r.id_locations = l.id)\n" +
-				"join cities c on (l.id_city = c.id)\n" +
-				"where o.id_user = ?;";
+		String sql = GET_ALL_ORDERS_FOR_USER;
 
 		List<ResultOfRequest> res = jdbcTemplate.query(sql, new Object[]{id}, new RowMapper<ResultOfRequest>() {
 			@Override
@@ -90,22 +93,19 @@ public class OrderDAO {
 		product.setQuantity(quantity);
 		Date date = Date.valueOf(LocalDate.now());
 
-		long model = jdbcTemplate.update("insert into dominos.order_details values (null, ?, ?, ?, ?);",
+		long model = jdbcTemplate.update(INSERT_INTO_ORDER_DETAILS,
 				session.getId(), null, addressId, date);
 
-		long temp = jdbcTemplate.update("INSERT INTO orders_products (detail_id) select max(id) from order_details;");
+		long temp = jdbcTemplate.update(INSERT_INTO_ORDER_PRODUCTS_FROM_ORDER_DETAILS);
 
-		long result = jdbcTemplate.update("select @MAX_ID:= max(id) from orders_products;\n" +
-						"UPDATE dominos.orders_products\n" +
-						"SET quantity = ?, products_id = ?\n" +
-						"WHERE id = @MAX_ID;",
+		long result = jdbcTemplate.update(PRODUCT_ID_AND_QUANTITY,
 				product.getQuantity(), product.getId());
 
 		return 1;
 	}
 
 	public Address deliveryOrder(long addressId) {
-		String sql = "SELECT * FROM dominos.addresses_for_order where id = ?;";
+		String sql = DELIVERY_ORDER;
 		Map map = jdbcTemplate.queryForMap(sql, addressId);
 		Address address = new Address();
 

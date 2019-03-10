@@ -16,13 +16,15 @@ import java.util.List;
 @Component
 public class RestaurantDAO {
 
+	private static final String GET_ALL_RESTAURANTS = "SELECT m.name, e.neighborhood_name\n" +
+													  "FROM locations e\n" +
+													  "JOIN cities m ON (e.id_city = m.id);"
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     public List<Restaurant> getAllRestaurants() throws URLException, ProductException, SQLException {
-        String sql = "SELECT m.name, e.neighborhood_name\n" +
-                "FROM locations e\n" +
-                "JOIN cities m ON (e.id_city = m.id);";
+        String sql = GET_ALL_RESTAURANTS;
 
         List<Restaurant> restaurants = jdbcTemplate.query(sql, new RowMapper<Restaurant>() {
             @Override
