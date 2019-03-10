@@ -32,6 +32,12 @@ public class UserDAO implements IUserDAO{
 		return jdbcTemplate.update("insert into dominos.addresses_for_order value (?, ?, ?);",
 				address.getId(), address.getAddress(), address.getUserId());
 	}
+	
+	public List<Address> getAllAdressesForUser() {
+		
+		/* TODO */
+		return null;
+	}
 
 	public int register(User user) throws SQLException, ClassNotFoundException {
 

@@ -28,6 +28,18 @@ public class Product {
 //			throw new URLException("Invalid URL!!");
 //		}
 	}
+	
+	public Product(long id, String name, String description, double price, String sizeP, String pictureUrl, int tp) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.sizeP = sizeP;
+		this.pictureUrl = pictureUrl;
+		this.tp = tp;
+	}
+	
 
 	public Product(long id, float price, String pictureUrl, String name) throws URLException {
 		this(price, pictureUrl);
