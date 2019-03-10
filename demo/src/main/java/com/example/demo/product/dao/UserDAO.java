@@ -15,8 +15,6 @@ public class UserDAO implements IUserDAO{
 	private static final String QUERY = "SELECT * FROM dominos.users WHERE email = ? AND password = SHA1(?);";
 	private static final String INSERT_ADDRESS_FOR_USER = "insert into dominos.addresses_for_order value (?, ?, ?);";
 	private static final String REGISTER = "insert into dominos.users value (?, ?, ?, ?, ?, SHA1(?));";
-	private static final String GET_USER_BY_ID = "SELECT * FROM dominos.users WHERE id=?;";
-	private static final String REMOVE_USER = "DELETE FROM dominos.users WHERE id = ?";
 
 //	@Autowired
 //	private OrderDAO od;
@@ -48,31 +46,6 @@ public class UserDAO implements IUserDAO{
 
 		return jdbcTemplate.update(REGISTER,
 				id, firstName, lastName, address, email, password);
-	}
-
-
-
-	@Override
-	public User getUserByID(long id) throws SQLException, ClassNotFoundException {
-		String sql = GET_USER_BY_ID;
-		Map map = jdbcTemplate.queryForMap(sql, id);
-		User user = new User();
-
-		user.setId(Long.valueOf((Integer)map.get("id")));
-		user.setFirstName((String)map.get("first_name"));
-		user.setLastName((String)map.get("last_name"));
-		user.setAddress((String)map.get("address"));
-		user.setEmail((String)map.get("email"));
-		user.setPassword((String)map.get("password"));
-
-		return user;
-	}
-
-	public boolean removeUser(int id) {
-		String sql = REMOVE_USER;
-		Object[] args = new Object[] {id};
-
-		return jdbcTemplate.update(sql, args) == 1;
 	}
 
 

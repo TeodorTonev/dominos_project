@@ -69,11 +69,6 @@ public class UserController {
         }
     }
 
-    @PostMapping("/users/delete/{id}")
-    public boolean removeUser(@PathVariable int id) {
-        return this.userDAO.removeUser(id);
-    }
-
 
     @PostMapping("/users/register")
     public int registerUser(@RequestBody User user) throws SQLException, ClassNotFoundException {
@@ -92,9 +87,4 @@ public class UserController {
             throw new UserException("The user is not logged");
         }
     }
-
-     @GetMapping("/getUser/{id}")
-     public User getUserById(@PathVariable long id) throws SQLException, ClassNotFoundException {
-            return this.userDAO.getUserByID(id);
-     }
 }
