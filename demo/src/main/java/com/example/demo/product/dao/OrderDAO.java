@@ -25,6 +25,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 
 @Component
@@ -83,20 +84,24 @@ public class OrderDAO {
 	}
 
 
-	public long insertProductsFromOrder(long productId, int quantity, long addressId) throws SQLException {
+	public long insertProductsFromOrder(long productId, int quantity, long addressId, HttpSession session) throws SQLException {
 		Product product = new Product();
 		product.setId(productId);
 		product.setQuantity(quantity);
-		Address address = deliveryOrder(addressId);
 		Date date = Date.valueOf(LocalDate.now());
 
-		long temp = jdbcTemplate.update("insert into dominos.order_details values (null, ?, ?, ?;",
-				address, addressId, date);
+		long model = jdbcTemplate.update("insert into dominos.order_details values (null, ?, ?, ?, ?);",
+				session.getId(), null, addressId, date);
 
-		long result = jdbcTemplate.update("insert into dominos.orders_products values (null, ?, ?, ?);",
+		long temp = jdbcTemplate.update("INSERT INTO orders_products (detail_id) select max(id) from order_details;");
+
+		long result = jdbcTemplate.update("select @MAX_ID:= max(id) from orders_products;\n" +
+						"UPDATE dominos.orders_products\n" +
+						"SET quantity = ?, products_id = ?\n" +
+						"WHERE id = @MAX_ID;",
 				product.getQuantity(), product.getId());
 
-		return 5;
+		return 1;
 	}
 
 	public Address deliveryOrder(long addressId) {

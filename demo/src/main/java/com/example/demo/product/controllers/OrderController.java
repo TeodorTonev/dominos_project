@@ -62,11 +62,10 @@ public class OrderController {
     }
 
     @PostMapping("/product/insertProductFromOrder")
-    public long insertProductsFromOrder(@RequestBody Product product, HttpSession session) throws SQLException, ChangeSetPersister.NotFoundException {
+    public long insertProductsFromOrder(@RequestBody long productid, int quantity, long addressId, HttpSession session) throws SQLException, ChangeSetPersister.NotFoundException {
         if(isLogged(session)) {
-            product.setUserId((long) (session.getAttribute("id")));
             System.out.println("The address was saved");
-            return this.orderDAO.insertProductsFromOrder(product);
+            return this.orderDAO.insertProductsFromOrder(productid, quantity, addressId, session);
         }
         else{
             System.out.println("The address was not saved");
