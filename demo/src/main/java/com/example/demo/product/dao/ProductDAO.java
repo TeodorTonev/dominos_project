@@ -17,6 +17,29 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductDAO implements IProductDAO{
 
+	private static final String INSERT_PRODUCTS = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
+	private static final String GET_ALL_PASTAS = "SELECT * FROM dominos.products where type_category_id = 5;";
+	private static final String GET_ALL_CHICKEN = "SELECT * FROM dominos.products where type_category_id = 4;";
+	private static final String GET_ALL_STARTERS = "SELECT * FROM dominos.products where type_category_id = 3;";
+	private static final String GET_ALL_SALADS = "SELECT * FROM dominos.products where type_category_id = 6;";
+	private static final String GET_ALL_SANDWICHES = "SELECT * FROM dominos.products where type_category_id = 7;";
+	private static final String GET_ALL_DESSERTS = "SELECT * FROM dominos.products where type_category_id = 9;";
+	private static final String GET_ALL_CUSTOMIZE = "SELECT id, name FROM dominos.customize;";
+	private static final String GET_ALL_PIZZA = "SELECT * FROM dominos.products where type_category_id = 2;";
+	private static final String GET_ALL_SAUSES = "SELECT * FROM dominos.products where type_category_id = 8;";
+	private static final String GET_ALL_DRINKS = "SELECT * FROM dominos.products where type_category_id = 10;";
+	private static final String GET_PRODUCT_BY_ID = "SELECT * FROM dominos.products WHERE id=?;";
+	private static final String REMOVE_PRODUCT = "DELETE FROM dominos.products WHERE id = ?";
+	private static final String INSERT_PRODUCT_IN_DOMINOS = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
+	private static final String INSERT_PIPS = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
+	private static final String INSERT_SANDWICH = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
+	private static final String INSERT_SALAD = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
+	private static final String INSERT_PASTA = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
+	private static final String INSERT_CHIKEN = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
+	private static final String ADD_STARTER = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
+	private static final String ADD_DEALS = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
+	private static final String ADD_PIZZA = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
+	private static final String FET_ALL_PRODUCTS = "SELECT name FROM dominos.products;";
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
@@ -28,24 +51,10 @@ public class ProductDAO implements IProductDAO{
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	private static final String GET_PRODUCT_BY_ID_SQL = "SELECT * FROM dominos.products WHERE id=?;";
-
-	private static final String GET_ALL_DRINKS_SQL = "SELECT * FROM dominos.products where type_category_id = 10;";
-	private static final String GET_ALL_SAUCES_SQL = "SELECT * FROM dominos.products where type_category_id = 8;";
-	private static final String GET_ALL_STARTERS_SQL =  "SELECT * FROM dominos.products where type_category_id = 3;";
-	private static final String GET_ALL_CHICKENS_SQL = "SELECT * FROM dominos.products where type_category_id = 4;";
-	private static final String GET_ALL_PIZZAS_SQL = "SELECT * FROM dominos.products where type_category_id = 2;";
-	private static final String GET_ALL_SALADS_SQL = "SELECT * FROM dominos.products where type_category_id = 6;";
-	private static final String GET_ALL_SANDWICHES_SQL = "SELECT * FROM dominos.products where type_category_id = 7;";
-	private static final String GET_ALL_DESERTS_SQL = "SELECT * FROM dominos.products where type_category_id = 9;";
-	private static final String GET_ALL_PASTAS_SQL = "SELECT * FROM dominos.products where type_category_id = 5;";
-	
-	private static final String GET_ALL_PRODUCTS_SQL = "SELECT name FROM dominos.products;"
-	private static final String GET_ALL_CUSTOMIZE = "SELECT id, name FROM dominos.customize;"
-	
+	private static final String GET_PRODUCT_BY_ID_SQL = "SELECT * FROM dominos.product where id = ?;";
 
 	public List<String> getAllProducts() {
-		String sql = GET_ALL_PRODUCTS_SQL;
+		String sql = FET_ALL_PRODUCTS;
 
 		List<String> names = jdbcTemplate.query(sql, new RowMapper<String>() {
 			public String mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -55,10 +64,147 @@ public class ProductDAO implements IProductDAO{
 		return names;
 	}
 
+	public int addProductPizza(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 2;//product type
+
+		return jdbcTemplate.update(ADD_PIZZA,
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
+	public int addProductDeals(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 1;//product type
+
+		return jdbcTemplate.update(ADD_DEALS,
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
+	public int addProductStarter(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 3;//product type
+
+		return jdbcTemplate.update(ADD_STARTER,
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
+	public int addProductChicken(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 4;//product type
+
+		return jdbcTemplate.update(INSERT_CHIKEN,
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
+	public int addProductPasta(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 5;//product type
+
+		return jdbcTemplate.update(INSERT_PASTA,
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
+	public int addProductSalad(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 6;//product type
+
+		return jdbcTemplate.update(INSERT_SALAD,
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
+	public int addProductSandwich(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 7;//product type
+
+		return jdbcTemplate.update(INSERT_SANDWICH,
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
+	public int addProductDips(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 8;//product type
+
+		return jdbcTemplate.update(INSERT_PIPS,
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
+	public int addProductDesserts(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 9;//product type
+
+		return jdbcTemplate.update(INSERT_PRODUCTS,
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
+	public int addProductDrinks(Product product) {
+		long id = product.getId();
+		String name = product.getName();
+		String description = product.getDescription();
+		double price = product.getPrice();
+		String size = product.getSizeP();
+		String pictureURL = product.getPictureUrl();
+		long type_id = 10;//product type
+
+		return jdbcTemplate.update(INSERT_PRODUCT_IN_DOMINOS,
+				id, name, description, price, size, pictureURL, type_id);
+	}
+
+
+	public boolean removeProduct(int id) {
+		String sql = REMOVE_PRODUCT;
+		Object[] args = new Object[] {id};
+
+		return jdbcTemplate.update(sql, args) == 1;
+	}
 
 	@Override
 	public Product getProductById(long id) throws ProductException, URLException, SQLException {
-		String sql = GET_PRODUCT_BY_ID_SQL;
+		String sql = GET_PRODUCT_BY_ID;
 		Map map = jdbcTemplate.queryForMap(sql, id);
 		Product product = new Product();
 
@@ -74,7 +220,7 @@ public class ProductDAO implements IProductDAO{
 
 	@Override
 	public List<Drink> getAllDrinks() throws URLException, ProductException, SQLException {
-		String sql = GET_ALL_DRINKS_SQL;
+		String sql = GET_ALL_DRINKS;
 
 		List<Drink> drinks = jdbcTemplate.query(sql, new RowMapper<Drink>() {
 			@Override
@@ -94,7 +240,7 @@ public class ProductDAO implements IProductDAO{
 	@Override
 	public List<Sauce> getAllSauces() throws URLException, ProductException, SQLException {
 
-		String sql = GET_ALL_SAUCES_SQL;
+		String sql = GET_ALL_SAUSES;
 
 		List<Sauce> sauses = jdbcTemplate.query(sql, new RowMapper<Sauce>() {
 			@Override
@@ -115,7 +261,7 @@ public class ProductDAO implements IProductDAO{
 	@Override
 	public List<Pizza> getAllPizzas() throws URLException, ProductException, SQLException {
 
-		String sql = GET_ALL_PIZZAS_SQL;
+		String sql = GET_ALL_PIZZA;
 
 		List<Pizza> pizzas = jdbcTemplate.query(sql, new RowMapper<Pizza>() {
 			@Override
@@ -149,7 +295,7 @@ public class ProductDAO implements IProductDAO{
 	}
 
 	public List<Dessert> getAllDesserts() throws URLException, ProductException, SQLException {
-		String sql = GET_ALL_DESERTS_SQL;
+		String sql = GET_ALL_DESSERTS;
 
 		List<Dessert> desserts = jdbcTemplate.query(sql, new RowMapper<Dessert>() {
 			@Override
@@ -167,7 +313,7 @@ public class ProductDAO implements IProductDAO{
 	}
 
 	public List<Sandwich> getAllSandwiches() throws URLException, ProductException, SQLException {
-		String sql = GET_ALL_SANDWICHES_SQL;
+		String sql = GET_ALL_SANDWICHES;
 
 		List<Sandwich> desserts = jdbcTemplate.query(sql, new RowMapper<Sandwich>() {
 			@Override
@@ -185,7 +331,7 @@ public class ProductDAO implements IProductDAO{
 	}
 
 	public List<Salads> getAllSalads() throws URLException, ProductException, SQLException {
-		String sql = GET_ALL_SALADS_SQL;
+		String sql = GET_ALL_SALADS;
 
 		List<Salads> salads = jdbcTemplate.query(sql, new RowMapper<Salads>() {
 			@Override
@@ -203,7 +349,7 @@ public class ProductDAO implements IProductDAO{
 	}
 
 	public List<Starters> getAllStarters() throws URLException, ProductException, SQLException {
-		String sql = GET_ALL_STARTERS_SQL;
+		String sql = GET_ALL_STARTERS;
 
 		List<Starters> starters = jdbcTemplate.query(sql, new RowMapper<Starters>() {
 			@Override
@@ -221,7 +367,7 @@ public class ProductDAO implements IProductDAO{
 	}
 
 	public List<Chicken> getAllChiken() throws URLException, ProductException, SQLException {
-		String sql = GET_ALL_CHICKENS_SQL;
+		String sql = GET_ALL_CHICKEN;
 
 		List<Chicken> chickens = jdbcTemplate.query(sql, new RowMapper<Chicken>() {
 			@Override
@@ -239,7 +385,7 @@ public class ProductDAO implements IProductDAO{
 	}
 
 	public List<Pasta> getAllPastas() throws URLException, ProductException, SQLException {
-		String sql = GET_ALL_PASTAS_SQL;
+		String sql = GET_ALL_PASTAS;
 
 		List<Pasta> pastas = jdbcTemplate.query(sql, new RowMapper<Pasta>() {
 			@Override

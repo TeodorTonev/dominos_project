@@ -2,44 +2,37 @@ package com.example.demo.product.model;
 
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
 @Component
 public class Order {
 	private long id;
-	private LocalDateTime datetime;
 	private User user;
+	private Restaurant restaurant;
 	private HashMap<Product, Integer> products;
 	private float price;
 	private Address address;
-	private boolean isDelivered;
-	private String deliveryTime;
 	
 	public Order() {
 		this.products = new HashMap<Product, Integer>();
-		this.isDelivered = false;
 		this.price = 0;
-		this.datetime = LocalDateTime.now();
 	}
-	
+
+	public void setRestaurant(Restaurant restaurant) {
+		this.restaurant = restaurant;
+	}
+
+	public Restaurant getRestaurant() {
+		return restaurant;
+	}
+
 	public long getId() {
 		return id;
 	}
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public LocalDateTime getDatetime() {
-		return datetime;
-	}
-
-	public void setDateTime(LocalDateTime datetime) {
-		this.datetime = datetime;
 	}
 
 	public User getUser() {
@@ -72,14 +65,6 @@ public class Order {
 
 	public void setAddres(Address address) {
 		this.address = address;
-	}
-
-	public boolean isDelivered() {
-		return isDelivered;
-	}
-
-	public void setDelivered(boolean isDelivered) {
-		this.isDelivered = isDelivered;
 	}
 	
 	public static double calculatePriceForCart(HashMap<Product, Integer> products) {

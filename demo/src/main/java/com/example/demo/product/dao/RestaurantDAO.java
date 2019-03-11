@@ -16,10 +16,9 @@ import java.util.List;
 @Component
 public class RestaurantDAO {
 
-	private static final String GET_ALL_RESTAURANTS = "SELECT m.name, e.neighborhood_name\n" +
-													  "FROM locations e\n" +
-													  "JOIN cities m ON (e.id_city = m.id);"
-
+    public static final String GET_ALL_RESTAURANTS = "SELECT m.name, e.neighborhood_name\n" +
+            "FROM locations e\n" +
+            "JOIN cities m ON (e.id_city = m.id);";
     @Autowired
     private JdbcTemplate jdbcTemplate;
 

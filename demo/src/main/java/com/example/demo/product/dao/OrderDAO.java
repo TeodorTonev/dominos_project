@@ -31,9 +31,23 @@ import javax.validation.constraints.NotNull;
 @Component
 public class OrderDAO {
 
-	@NotNull
-	private Order order;
 
+	private static final String LIST_ALL_ORDERS_FROM_USER = "select  u.first_name, u.last_name, c.name, l.neighborhood_name, p.name, e.quantity, o.date\n" +
+			"from orders_products e \n" +
+			"join products p on (e.products_id = p.id)\n" +
+			"join order_details o on (e.detail_id = o.id)\n" +
+			"join users u on (o.id_user = u.id)\n" +
+			"join restaurants r on (o.id_restaurant = r.id)\n" +
+			"join locations l on (r.id_locations = l.id)\n" +
+			"join cities c on (l.id_city = c.id)\n" +
+			"where o.id_user = ?;";
+	private static final String INSERT_ORDER_FOR_USER = "insert into dominos.order_details values (null, ?, ?, ?, ?);";
+	private static final String INSERT_INTO_ORDERS_PRODUCTS_DETAIL_ID_SELECT_MAX_ID_FROM_ORDER_DETAILS = "insert into orders_products (detail_id) select max(id) from order_details;";
+	private static final String SELECT_MAX_ID_MAX_ID_FROM_ORDERS_PRODUCTS = "select @MAX_ID:= max(id) from orders_products;";
+	private static final String SELECT_PRICE_FROM_DOMINOS_PRODUCTS_WHERE_ID_MAX_ID = "SELECT price FROM dominos.products WHERE id = @MAX_ID;";
+	private static final String DELIVERY_ORDER = "SELECT * FROM dominos.addresses_for_order where id = ?;";
+	private static final String REMOVE_PRODUCT_BY_ORDER = "DELETE FROM dominos.orders_products WHERE id = ?;";
+	private static final String UPDATE_DOMINOS_ORDERS_PRODUCTS_SET_QUANTITY_PRODUCTS_ID_WHERE_ID_MAX_ID = "UPDATE dominos.orders_products SET quantity = ?, products_id = ? WHERE id = @MAX_ID;";
 	private UserController us;
 
     @Autowired
@@ -42,31 +56,8 @@ public class OrderDAO {
     @Autowired
     private RestaurantDAO restaurantDAO;
 
-
-	private static final String PRODUCT_ID_AND_QUANTITY = "select @MAX_ID:= max(id) from orders_products;\n" +
-															"UPDATE dominos.orders_products\n" +
-															"SET quantity = ?, products_id = ?\n" +
-															"WHERE id = @MAX_ID;";
-
-	private static final String INSERT_INTO_ORDER_PRODUCTS_FROM_ORDER_DETAILS = "INSERT INTO orders_products (detail_id) select max(id) from order_details;";
-
-	private static final String INSERT_INTO_ORDER_DETAILS = "insert into dominos.order_details values (null, ?, ?, ?, ?);";
-
-	private static final String GET_ALL_ORDERS_FOR_USER = "select  u.first_name, u.last_name, c.name, l.neighborhood_name, p.name, e.quantity, o.date\n" +
-															"from orders_products e \n" +
-															"join products p on (e.products_id = p.id)\n" +
-															"join order_details o on (e.detail_id = o.id)\n" +
-															"join users u on (o.id_user = u.id)\n" +
-															"join restaurants r on (o.id_restaurant = r.id)\n" +
-															"join locations l on (r.id_locations = l.id)\n" +
-															"join cities c on (l.id_city = c.id)\n" +
-															"where o.id_user = ?;";
-
-	private static final String DELIVERY_ORDER = "SELECT * FROM dominos.addresses_for_order where id = ?;";
-
-
 	public List<ResultOfRequest> listAllOrdersForUser(long id) throws ClassNotFoundException, SQLException, UserException {
-		String sql = GET_ALL_ORDERS_FOR_USER;
+		String sql = LIST_ALL_ORDERS_FROM_USER;
 
 		List<ResultOfRequest> res = jdbcTemplate.query(sql, new Object[]{id}, new RowMapper<ResultOfRequest>() {
 			@Override
@@ -87,21 +78,26 @@ public class OrderDAO {
 	}
 
 
-	public long insertProductsFromOrder(long productId, int quantity, long addressId, HttpSession session) throws SQLException {
-		Product product = new Product();
-		product.setId(productId);
-		product.setQuantity(quantity);
+	public double insertOrderForUser(ResultOfOrder resultOfOrder) throws SQLException {
+
+		int userId = resultOfOrder.getUserId();
+		int restaurantId = 3;
+		int addressId = resultOfOrder.getAddressId();
+		int quantity = resultOfOrder.getQuantity();
+		int productId = resultOfOrder.getProductId();
 		Date date = Date.valueOf(LocalDate.now());
 
-		long model = jdbcTemplate.update(INSERT_INTO_ORDER_DETAILS,
-				session.getId(), null, addressId, date);
+		long res = jdbcTemplate.update(INSERT_ORDER_FOR_USER,
+				userId, restaurantId, addressId, date);
 
-		long temp = jdbcTemplate.update(INSERT_INTO_ORDER_PRODUCTS_FROM_ORDER_DETAILS);
+		long temp = jdbcTemplate.update(INSERT_INTO_ORDERS_PRODUCTS_DETAIL_ID_SELECT_MAX_ID_FROM_ORDER_DETAILS);
 
-		long result = jdbcTemplate.update(PRODUCT_ID_AND_QUANTITY,
-				product.getQuantity(), product.getId());
+		long result = jdbcTemplate.queryForObject(SELECT_MAX_ID_MAX_ID_FROM_ORDERS_PRODUCTS, Long.class);
+		long upd = jdbcTemplate.update(UPDATE_DOMINOS_ORDERS_PRODUCTS_SET_QUANTITY_PRODUCTS_ID_WHERE_ID_MAX_ID, quantity, productId);
 
-		return 1;
+		double priceForMoment = jdbcTemplate.queryForObject(SELECT_PRICE_FROM_DOMINOS_PRODUCTS_WHERE_ID_MAX_ID, Double.class);
+		return priceForMoment;
+
 	}
 
 	public Address deliveryOrder(long addressId) {
@@ -123,7 +119,7 @@ public class OrderDAO {
 	public List<String> listAllHoursForDelivery() {
 		List<String> result = new ArrayList<>();
 		result.add("сега");
-		for (int hour = 10; hour < 24; hour++) {
+		for (int hour = 11; hour < 24; hour++) {
 			for (int min = 0; min < 60; min += 10) {
 				if (min == 0) {
 					result.add(hour + ":" + min + "0");
@@ -135,9 +131,12 @@ public class OrderDAO {
 		return result;
 	}
 
-//	public String removeProductByOrder(Long productId) {
-//
-//	}
+	public boolean removeProductByOrder(int id) {
+		String sql = REMOVE_PRODUCT_BY_ORDER;
+		Object[] args = new Object[] {id};
+
+		return jdbcTemplate.update(sql, args) == 1;
+	}
 
 }
 

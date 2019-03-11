@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 public class Admin extends User implements Runnable{
     public static final int TIME_FOR_WORK_WITH_DATA = 50000;
 
+    @NotNull
     private AdminDAO adminDAO;
     @NotNull
     private String name;

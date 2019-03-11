@@ -12,12 +12,10 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeSet;
 
 @RestController
 public class OrderController {
@@ -37,6 +35,7 @@ public class OrderController {
 
     @GetMapping("/orders/{addressId}")
     public Address deliveryOrder(@PathVariable long addressId) {
+
         return this.orderDAO.deliveryOrder(addressId);
     }
 
@@ -51,7 +50,7 @@ public class OrderController {
     }
 
     @PostMapping("/yourOrders/{id}")
-    public List<ResultOfRequest>  listAllOrdersOnUser(long id, HttpSession session) throws SQLException, ClassNotFoundException, UserException {
+    public List<ResultOfRequest>  listAllOrdersOnUser(@PathVariable long id, HttpSession session) throws SQLException, ClassNotFoundException, UserException {
         if (isLogged(session)) {
             return this.orderDAO.listAllOrdersForUser(id);
         }
@@ -61,15 +60,25 @@ public class OrderController {
         }
     }
 
-    @PostMapping("/product/insertProductFromOrder")
-    public long insertProductsFromOrder(@RequestBody long productid, int quantity, long addressId, HttpSession session) throws SQLException, ChangeSetPersister.NotFoundException {
+    @PostMapping("/product/insertOrder")
+    public double insertOrderFromUser(@RequestBody ResultOfOrder resultOfOrder, HttpSession session) throws SQLException, ChangeSetPersister.NotFoundException {
         if(isLogged(session)) {
-            System.out.println("The address was saved");
-            return this.orderDAO.insertProductsFromOrder(productid, quantity, addressId, session);
+            System.out.println("The element was saved");
+            return this.orderDAO.insertOrderForUser(resultOfOrder);
         }
         else{
-            System.out.println("The address was not saved");
+            System.out.println("The element was not saved");
             return -1;
+        }
+    }
+
+    @PostMapping("/products/deleteByOrder/{id}")
+    public boolean removeProductByOrder(@PathVariable int id, HttpSession session) {
+        if (isLogged(session)) {
+            return this.orderDAO.removeProductByOrder(id);
+        }
+        else {
+            return false;
         }
     }
 }
