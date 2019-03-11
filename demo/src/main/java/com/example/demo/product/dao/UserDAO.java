@@ -29,6 +29,7 @@ public class UserDAO implements IUserDAO{
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
+	
 
 	public int insertAddressForUser(Address address) throws SQLException {
 		return jdbcTemplate.update(INSERT_ADDRESS_FOR_USER,

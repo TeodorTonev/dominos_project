@@ -49,8 +49,6 @@ public class AdminDAO {
     }
 	
 	
-	
-	
 	public int addProductPizza(Product product) {
 		long id = product.getId();
 		String name = product.getName();
