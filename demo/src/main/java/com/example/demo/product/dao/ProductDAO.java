@@ -31,14 +31,6 @@ public class ProductDAO implements IProductDAO{
 	private static final String GET_PRODUCT_BY_ID = "SELECT * FROM dominos.products WHERE id=?;";
 	private static final String REMOVE_PRODUCT = "DELETE FROM dominos.products WHERE id = ?";
 	private static final String INSERT_PRODUCT_IN_DOMINOS = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
-	private static final String INSERT_PIPS = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
-	private static final String INSERT_SANDWICH = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
-	private static final String INSERT_SALAD = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
-	private static final String INSERT_PASTA = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
-	private static final String INSERT_CHIKEN = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
-	private static final String ADD_STARTER = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
-	private static final String ADD_DEALS = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
-	private static final String ADD_PIZZA = "insert into dominos.products value (?, ?, ?, ?, ?, ?, ?);";
 	private static final String FET_ALL_PRODUCTS = "SELECT name FROM dominos.products;";
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -73,7 +65,7 @@ public class ProductDAO implements IProductDAO{
 		String pictureURL = product.getPictureUrl();
 		long type_id = 2;//product type
 
-		return jdbcTemplate.update(ADD_PIZZA,
+		return jdbcTemplate.update(INSERT_PRODUCT_IN_DOMINOS,
 				id, name, description, price, size, pictureURL, type_id);
 	}
 
@@ -86,7 +78,7 @@ public class ProductDAO implements IProductDAO{
 		String pictureURL = product.getPictureUrl();
 		long type_id = 1;//product type
 
-		return jdbcTemplate.update(ADD_DEALS,
+		return jdbcTemplate.update(INSERT_PRODUCT_IN_DOMINOS,
 				id, name, description, price, size, pictureURL, type_id);
 	}
 
@@ -99,7 +91,7 @@ public class ProductDAO implements IProductDAO{
 		String pictureURL = product.getPictureUrl();
 		long type_id = 3;//product type
 
-		return jdbcTemplate.update(ADD_STARTER,
+		return jdbcTemplate.update(INSERT_PRODUCT_IN_DOMINOS,
 				id, name, description, price, size, pictureURL, type_id);
 	}
 
@@ -112,7 +104,7 @@ public class ProductDAO implements IProductDAO{
 		String pictureURL = product.getPictureUrl();
 		long type_id = 4;//product type
 
-		return jdbcTemplate.update(INSERT_CHIKEN,
+		return jdbcTemplate.update(INSERT_PRODUCT_IN_DOMINOS,
 				id, name, description, price, size, pictureURL, type_id);
 	}
 
@@ -125,7 +117,7 @@ public class ProductDAO implements IProductDAO{
 		String pictureURL = product.getPictureUrl();
 		long type_id = 5;//product type
 
-		return jdbcTemplate.update(INSERT_PASTA,
+		return jdbcTemplate.update(INSERT_PRODUCT_IN_DOMINOS,
 				id, name, description, price, size, pictureURL, type_id);
 	}
 
@@ -138,7 +130,7 @@ public class ProductDAO implements IProductDAO{
 		String pictureURL = product.getPictureUrl();
 		long type_id = 6;//product type
 
-		return jdbcTemplate.update(INSERT_SALAD,
+		return jdbcTemplate.update(INSERT_PRODUCT_IN_DOMINOS,
 				id, name, description, price, size, pictureURL, type_id);
 	}
 
@@ -151,7 +143,7 @@ public class ProductDAO implements IProductDAO{
 		String pictureURL = product.getPictureUrl();
 		long type_id = 7;//product type
 
-		return jdbcTemplate.update(INSERT_SANDWICH,
+		return jdbcTemplate.update(INSERT_PRODUCT_IN_DOMINOS,
 				id, name, description, price, size, pictureURL, type_id);
 	}
 
@@ -164,7 +156,7 @@ public class ProductDAO implements IProductDAO{
 		String pictureURL = product.getPictureUrl();
 		long type_id = 8;//product type
 
-		return jdbcTemplate.update(INSERT_PIPS,
+		return jdbcTemplate.update(INSERT_PRODUCT_IN_DOMINOS,
 				id, name, description, price, size, pictureURL, type_id);
 	}
 

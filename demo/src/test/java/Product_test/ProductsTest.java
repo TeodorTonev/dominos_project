@@ -1,26 +1,23 @@
-package com.dominos.tests;
+package Product_test;
 
 import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 import java.util.List;
 
+import com.example.demo.product.Exception.URLException;
+import com.example.demo.product.dao.ProductDAO;
+import com.example.demo.product.model.Product;
 import org.junit.Test;
-
-import com.dominos.dao.ProductDAO;
-import com.dominos.dao.UserDAO;
-import com.dominos.exceptions.URLException;
-import com.dominos.models.Product;
-import com.dominos.models.User;
 
 public class ProductsTest {
 
 	@Test
-	public void testAddProduct() throws SQLException, ClassNotFoundException, URLException{
+	public void testAddProduct() throws SQLException, ClassNotFoundException, URLException {
 		ProductDAO dao = new ProductDAO();
 		int oldCountOfUsers = dao.getAllProducts().size();
 		
-		dao.addProduct(new Product(155, "Препечена пица", "Моцарела, Доматен сос, кашкавал", 6.70, "Голяма(8 парчета)", "url.url", 2));
+		dao.addProductPizza(new Product((float) 6.70, "url.url"));
 		int newCountOfUsers = dao.getAllProducts().size();
 	
 		assertNotSame(oldCountOfUsers, newCountOfUsers);
@@ -30,14 +27,14 @@ public class ProductsTest {
 	@Test
 	void testAddProductAgain() throws ClassNotFoundException, SQLException, URLException {
 		ProductDAO dao = new ProductDAO();
-		Product product = new Product(155, "Препечена пица", "Моцарела, Доматен сос, кашкавал", 6.70, "Голяма(8 парчета)", "url.url", 2);
-		dao.addProduct(product);
+		Product product = new Product((float) 6.70, "url.url");
+		dao.addProductPizza(product);
 		
 		List<String> products = dao.getAllProducts();
 		assertTrue(products.stream().filter(product1 -> 
 		product1.equals(product)).findAny().isPresent());
 		
-		dao.removeProduct(product.getId());
+		dao.removeProduct((int) product.getId());
 	}
 	
 	@Test
@@ -51,10 +48,4 @@ public class ProductsTest {
 	
 		assertNotSame(oldCountOfUsers, newCountOfUsers);
 	}
-	
-	void testDeleteProductAgain() {
-		
-		/*......*/
-	}
-
 }

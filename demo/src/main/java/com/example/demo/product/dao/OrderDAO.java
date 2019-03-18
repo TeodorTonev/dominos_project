@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.Map.Entry;
 import java.sql.Date;
@@ -24,8 +25,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 
 @Component
@@ -77,7 +80,7 @@ public class OrderDAO {
 		return res;
 	}
 
-
+	@Transactional
 	public double insertOrderForUser(ResultOfOrder resultOfOrder) throws SQLException {
 
 		int userId = resultOfOrder.getUserId();
@@ -117,14 +120,21 @@ public class OrderDAO {
 	}
 
 	public List<String> listAllHoursForDelivery() {
+		LocalTime ldt = LocalTime.now();
+		String time = ldt.toString();
+		String[] tokens = time.split(":");
+		String token1 = tokens[0];
+		int tok = Integer.parseInt(token1);
 		List<String> result = new ArrayList<>();
 		result.add("сега");
 		for (int hour = 11; hour < 24; hour++) {
 			for (int min = 0; min < 60; min += 10) {
-				if (min == 0) {
-					result.add(hour + ":" + min + "0");
-				} else {
-					result.add(hour + ":" + min);
+				if (hour > tok) {
+					if (min == 0) {
+						result.add(hour + ":" + min + "0");
+					} else {
+						result.add(hour + ":" + min);
+					}
 				}
 			}
 		}
@@ -137,6 +147,5 @@ public class OrderDAO {
 
 		return jdbcTemplate.update(sql, args) == 1;
 	}
-
 }
 
