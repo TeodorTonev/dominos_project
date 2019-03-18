@@ -19,6 +19,7 @@ import com.example.demo.product.Exception.UserException;
 import com.example.demo.product.controllers.UserController;
 import com.example.demo.product.model.*;
 import com.sun.prism.impl.Disposer;
+import lombok.Synchronized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.quartz.QuartzProperties;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -81,6 +82,7 @@ public class OrderDAO {
 	}
 
 	@Transactional
+	@Synchronized
 	public double insertOrderForUser(ResultOfOrder resultOfOrder) throws SQLException {
 
 		int userId = resultOfOrder.getUserId();
